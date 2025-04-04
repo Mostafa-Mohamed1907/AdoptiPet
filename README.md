@@ -1,0 +1,1 @@
+AdoptiPet is a RESTful Web API built with ASP.NET Core that simulates a digital pet adoption and review system. It allows users to manage pets, their categories, owners, and user reviews — making it ideal for learning how to build scalable APIs using modern backend architecture.
