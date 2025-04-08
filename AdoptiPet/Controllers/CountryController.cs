@@ -57,5 +57,25 @@ namespace AdoptiPet.Controllers
                 return BadRequest(ModelState);
             return Ok(owners);
         }
+        [HttpPost]
+        public IActionResult CreateCategory([FromBody] CountryDTO countryDto)
+        {
+            if (countryDto == null)
+                return BadRequest(ModelState);
+
+            var country = countryRepository.GetCountries()
+                .FirstOrDefault(c => c.Name.Trim().ToUpper() == countryDto.Name.Trim().ToUpper());
+
+            if (country != null)
+            {
+                ModelState.AddModelError("", "Country already exists");
+                return BadRequest(ModelState);
+            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var countryMap = mapper.Map<Country>(countryDto);
+            countryRepository.CreateCountry(countryMap);
+            return Ok("Created Successfully");
+        }
     }
 }

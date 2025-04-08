@@ -33,5 +33,11 @@ namespace AdoptiPet.Repository
         {
             context.SaveChanges();
         }
+
+        public void CreateCategory(Category category)
+        {
+            context.Categories.Add(category);
+            Save();
+        }
     }
 }

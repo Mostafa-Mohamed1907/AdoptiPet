@@ -9,8 +9,11 @@ namespace AdoptiPet.Helper
         public MappingProfiles()
         {
             CreateMap<Pet, PetDTO>();
+            CreateMap<PetDTO, Pet>();
             CreateMap<Category, CategoryDTO>();
+            CreateMap<CategoryDTO, Category>();
             CreateMap<Country, CountryDTO>();
+            CreateMap<CountryDTO, Country>();
             CreateMap<Owner, OwnerDTO>();
             CreateMap<Review, ReviewDTO>();
             CreateMap<Reviewer, ReviewerDTO>();

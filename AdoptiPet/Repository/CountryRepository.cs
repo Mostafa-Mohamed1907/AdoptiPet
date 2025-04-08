@@ -39,5 +39,11 @@ namespace AdoptiPet.Repository
         {
             context.SaveChanges();
         }
+
+        public void CreateCountry(Country country)
+        {
+            context.Countries.Add(country);
+            Save();
+        }
     }
 }

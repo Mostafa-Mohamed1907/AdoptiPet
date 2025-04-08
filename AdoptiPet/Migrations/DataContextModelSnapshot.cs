@@ -36,7 +36,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.Country", b =>
@@ -53,7 +53,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.Owner", b =>
@@ -79,7 +79,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Owners");
+                    b.ToTable("Owners", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.Pet", b =>
@@ -99,7 +99,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pets");
+                    b.ToTable("Pets", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.PetCategory", b =>
@@ -114,7 +114,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("PetCategories");
+                    b.ToTable("PetCategories", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.PetOwner", b =>
@@ -129,7 +129,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("PetOwners");
+                    b.ToTable("PetOwners", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.Review", b =>
@@ -163,7 +163,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasIndex("ReviewId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.Reviewer", b =>
@@ -184,7 +184,7 @@ namespace AdoptiPet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reviewers");
+                    b.ToTable("Reviewers", (string)null);
                 });
 
             modelBuilder.Entity("AdoptiPet.Models.Owner", b =>

@@ -25,6 +25,7 @@ namespace AdoptiPet.Repository
         public void CreatePet(Pet pet)
         {
             context.Pets.Add(pet);
+            Save();
         }
 
         public void DeletePet(Pet pet)
@@ -34,6 +35,7 @@ namespace AdoptiPet.Repository
         public void UpdatePet(Pet pet)
         {
             context.Update(pet);
+            Save();
         }
         public int GetPetRating(int petId)
         {

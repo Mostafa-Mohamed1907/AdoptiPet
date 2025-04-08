@@ -48,5 +48,25 @@ namespace AdoptiPet.Controllers
             return Ok(Pets);
 
         }
+        [HttpPost]
+        public IActionResult CreateCategory([FromBody] CategoryDTO categoryDto)
+        {
+            if (categoryDto == null)
+                return BadRequest(ModelState);
+
+            var category = categoryRepository.GetCategories()
+                .FirstOrDefault(c => c.Name.Trim().ToUpper() == categoryDto.Name.Trim().ToUpper());
+
+            if (category!=null)
+            {
+                ModelState.AddModelError("", "Category already exists");
+                return BadRequest(ModelState);
+            }
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var categoryMap = mapper.Map<Category>(categoryDto);
+            categoryRepository.CreateCategory(categoryMap);
+            return Ok("Created Successfully");
+        }
     }
 }

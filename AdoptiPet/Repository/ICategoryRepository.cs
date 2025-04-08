@@ -9,6 +9,7 @@ namespace AdoptiPet.Repository
         public Category GetById(int id);
         public ICollection<Pet> GetPetByCategory(int categoryId);
         public bool CategoryExist(int id);
+        public void CreateCategory(Category category);
         public void Save();
     }
 }

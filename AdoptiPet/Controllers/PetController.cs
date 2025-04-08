@@ -51,28 +51,33 @@ namespace AdoptiPet.Controllers
             return Ok(rating);
         }
         [HttpPost]
-        public IActionResult CreatePet([FromBody] Pet pet)
+        public IActionResult CreatePet([FromBody] PetDTO petDto)
         {
-            if (pet == null)
-            {
-                return BadRequest();
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var pet = mapper.Map<Pet>(petDto); // assuming AutoMapper config is set
             petRepository.CreatePet(pet);
+
             return CreatedAtAction(nameof(GetPetById), new { petId = pet.Id }, pet);
         }
+
+
         [HttpPut("{petId}")]
-        public IActionResult UpdatePet(int petId, [FromBody] Pet pet)
+        public IActionResult UpdatePet(int petId, [FromBody] PetDTO petDto)
         {
-            if (pet == null || petId != pet.Id)
-            {
-                return BadRequest();
-            }
             Pet existingPet = petRepository.GetPet(petId);
             if (existingPet == null)
             {
                 return NotFound();
             }
-            petRepository.UpdatePet(pet);
+            if (petDto == null || petId != petDto.Id)
+            {
+                return BadRequest();
+            }
+            mapper.Map(petDto, existingPet);
+
+            petRepository.UpdatePet(existingPet);
             return NoContent();
         }
         [HttpDelete("{petId}")]
