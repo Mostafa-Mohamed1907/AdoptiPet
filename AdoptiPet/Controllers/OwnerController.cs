@@ -1,4 +1,5 @@
 ﻿using AdoptiPet.DTO;
+using AdoptiPet.Models;
 using AdoptiPet.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -11,11 +12,13 @@ namespace AdoptiPet.Controllers
     public class OwnerController : ControllerBase
     {
         private readonly IOwnerRepository ownerRepository;
+        private readonly ICountryRepository countryRepository;
         private readonly IMapper mapper;
 
-        public OwnerController(IOwnerRepository ownerRepository, IMapper mapper)
+        public OwnerController(IOwnerRepository ownerRepository, ICountryRepository countryRepository, IMapper mapper)
         {
             this.ownerRepository = ownerRepository;
+            this.countryRepository = countryRepository;
             this.mapper = mapper;
         }
         [HttpGet]
@@ -26,7 +29,7 @@ namespace AdoptiPet.Controllers
                 return BadRequest(ModelState);
             return Ok(owners);
         }
-        [HttpGet("{ownerId}")]
+        [HttpGet("{ownerId}", Name = "GetOwnerById")]
         public IActionResult GetOwnerById(int ownerId)
         {
             var owner = mapper.Map<OwnerDTO>(ownerRepository.GetById(ownerId));
@@ -55,6 +58,35 @@ namespace AdoptiPet.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(owners);
+        }
+
+        [HttpPost]
+        public IActionResult CreateOwner([FromBody] OwnerDTO ownerDto)
+        {
+            if (ownerDto == null)
+                return BadRequest(ModelState);
+            if (ownerRepository.OwnerExists(ownerDto.Id))
+            {
+                ModelState.AddModelError("", "Owner already exists");
+                return StatusCode(422, ModelState);
+            }
+            if (!countryRepository.CountryExists(ownerDto.CountryId))
+            {
+                ModelState.AddModelError("CountryId", "Invalid Country ID.");
+                return BadRequest(ModelState);
+            }
+            var owner = mapper.Map<Owner>(ownerDto);
+            ownerRepository.CreateOwner(owner);
+            return CreatedAtRoute("GetOwnerById", new { ownerId = owner.Id }, owner);
+        }
+        [HttpDelete("{ownerId}")]
+        public IActionResult DeleteOwner(int ownerId)
+        {
+            if (!ownerRepository.OwnerExists(ownerId))
+                return NotFound();
+            var ownerToDelete = ownerRepository.GetById(ownerId);
+            ownerRepository.DeleteOwner(ownerToDelete);
+            return Ok("Review deleted successfully");
         }
     }
 }

@@ -11,11 +11,13 @@ namespace AdoptiPet.Models
         public int Rating { get; set; }
 
         [ForeignKey("Reviewer")]
-        public int ReviewId { get; set; }
+        public int ReviewerId { get; set; }
+        [JsonIgnore]
         public Reviewer Reviewer { get; set; }
 
         [ForeignKey("Pet")]
         public int PetId { get; set; }
+        [JsonIgnore]
         public Pet Pet { get; set; }
     }
 }

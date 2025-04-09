@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace AdoptiPet.Models
 {
@@ -10,8 +11,9 @@ namespace AdoptiPet.Models
 
         [ForeignKey("Country")]
         public int CountryId { get; set; }
+        [JsonIgnore]
         public Country Country { get; set; }
-
+        [JsonIgnore]
         public ICollection<PetOwner> PetOwners { get; set; }
     }
 }

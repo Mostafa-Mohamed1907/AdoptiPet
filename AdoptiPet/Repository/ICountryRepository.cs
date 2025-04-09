@@ -10,6 +10,7 @@ namespace AdoptiPet.Repository
         public ICollection<Owner> GetOwnersFromCountry(int countryId);
         public bool CountryExists(int id);
         public void CreateCountry(Country country);
+        public void DeleteCountry(Country country);
         public void Save();
 
 

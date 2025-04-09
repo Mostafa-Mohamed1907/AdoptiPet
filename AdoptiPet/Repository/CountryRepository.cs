@@ -35,15 +35,21 @@ namespace AdoptiPet.Repository
             return context.Owners.Where(o => o.CountryId == countryId).ToList();
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
         public void CreateCountry(Country country)
         {
             context.Countries.Add(country);
             Save();
         }
+        public void DeleteCountry(Country country)
+        {
+            context.Countries.Remove(country);
+            Save();
+        }
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
+
     }
 }

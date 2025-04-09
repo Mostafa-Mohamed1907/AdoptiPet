@@ -9,6 +9,8 @@ namespace AdoptiPet.Repository
         public ICollection<Owner> GetOwnersOfAPet(int petId);
         public ICollection<Pet> GetPetByOwner(int ownerId);
         public bool OwnerExists(int ownerId);
+        public void CreateOwner(Owner owner);
+        public void DeleteOwner(Owner owner);
         public void Save();
     }
 }

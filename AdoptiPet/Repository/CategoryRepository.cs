@@ -29,15 +29,21 @@ namespace AdoptiPet.Repository
             return context.Categories.Any(c => c.Id == id);
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
         public void CreateCategory(Category category)
         {
             context.Categories.Add(category);
             Save();
         }
+        public void DeleteCategory(Category category)
+        {
+            context.Categories.Remove(category);
+            Save();
+        }
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
+        
     }
 }

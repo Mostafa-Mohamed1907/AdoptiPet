@@ -77,5 +77,14 @@ namespace AdoptiPet.Controllers
             countryRepository.CreateCountry(countryMap);
             return Ok("Created Successfully");
         }
+        [HttpDelete("{countryId}")]
+        public IActionResult DeleteCountry(int countryId)
+        {
+            if (!countryRepository.CountryExists(countryId))
+                return NotFound();
+            var country = countryRepository.GetById(countryId);
+            countryRepository.DeleteCountry(country);
+            return Ok("Country deleted successfully");
+        }
     }
 }

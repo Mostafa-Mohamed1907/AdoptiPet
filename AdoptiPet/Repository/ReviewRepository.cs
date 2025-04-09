@@ -33,6 +33,17 @@ namespace AdoptiPet.Repository
             return context.Reviews.Any(r => r.Id == reviewId);
         }
 
+        public void CreateReview(Review review)
+        {
+            context.Reviews.Add(review);
+            Save();
+        }
+        public void DeleteReview(Review review)
+        {
+            context.Reviews.Remove(review);
+            Save();
+        }
+
         public void Save()
         {
             context.SaveChanges();

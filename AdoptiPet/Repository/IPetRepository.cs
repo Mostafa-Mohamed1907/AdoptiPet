@@ -11,6 +11,7 @@ namespace AdoptiPet.Repository
         public void CreatePet(Pet pet);
         public void UpdatePet(Pet pet);
         public void DeletePet(Pet pet);
+        public bool PetExists(int petId);
         public void Save();
     }
 }

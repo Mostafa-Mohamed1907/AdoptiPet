@@ -1,4 +1,5 @@
 ﻿using AdoptiPet.DTO;
+using AdoptiPet.Models;
 using AdoptiPet.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -26,8 +27,8 @@ namespace AdoptiPet.Controllers
                 return BadRequest(ModelState);
             return Ok(reviewers);
         }
-        [HttpGet("{reviewerId}")]
-        public IActionResult GetReviewById(int reviewerId)
+        [HttpGet("{reviewerId}", Name = "GetReviewerById")]
+        public IActionResult GetReviewerById(int reviewerId)
         {
             var reviewer = mapper.Map<ReviewerDTO>(reviewerRepository.GetById(reviewerId));
             if (!reviewerRepository.ReviewerExists(reviewerId))
@@ -46,5 +47,25 @@ namespace AdoptiPet.Controllers
                 return BadRequest(ModelState);
             return Ok(reviews);
         }
+        [HttpPost]
+        public IActionResult CreateReviewer([FromBody] ReviewerDTO reviewerDto)
+        {
+            if (reviewerDto == null)
+                return BadRequest("Reviewer data is required.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var reviewer = mapper.Map<Reviewer>(reviewerDto);
+            reviewerRepository.CreateReviewer(reviewer);
+            return CreatedAtRoute("GetReviewerById", new { reviewerId = reviewer.Id }, reviewer);
+        }
+        [HttpDelete("{reviewerId}")]
+        public IActionResult DeleteReviewer(int reviewerId)
+        {
+            if (!reviewerRepository.ReviewerExists(reviewerId))
+                return NotFound();
+            var reviewer = reviewerRepository.GetById(reviewerId);
+            reviewerRepository.DeleteReviewer(reviewer);
+            return Ok("Reviewer deleted successfully");
+        } 
     }
 }

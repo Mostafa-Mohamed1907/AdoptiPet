@@ -34,10 +34,21 @@ namespace AdoptiPet.Repository
         {
             return context.Owners.Any(o => o.Id == ownerId);
         }
-
+        public void CreateOwner(Owner owner)
+        {
+            context.Owners.Add(owner);
+            Save();
+        }
+        public void DeleteOwner(Owner owner)
+        {
+            context.Owners.Remove(owner);
+            Save();
+        }
         public void Save()
         {
             context.SaveChanges();
         }
+
+        
     }
 }

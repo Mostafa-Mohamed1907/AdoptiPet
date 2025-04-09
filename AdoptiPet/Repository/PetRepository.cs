@@ -46,6 +46,10 @@ namespace AdoptiPet.Repository
             }
             return ((int) review.Sum(r => r.Rating) / review.Count());
         }
+        public bool PetExists(int petId)
+        {
+            return context.Pets.Any(r => r.Id == petId);
+        }
         public void Save()
         {
             context.SaveChanges();

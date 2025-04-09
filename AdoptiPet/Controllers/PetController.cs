@@ -83,12 +83,10 @@ namespace AdoptiPet.Controllers
         [HttpDelete("{petId}")]
         public IActionResult DeletePet(int petId)
         {
-            Pet pet = petRepository.GetPet(petId);
-            if (pet == null)
-            {
+            if (!petRepository.PetExists(petId))
                 return NotFound();
-            }
-            petRepository.DeletePet(pet);
+            var petToDelete = petRepository.GetPet(petId);
+            petRepository.DeletePet(petToDelete);
             return NoContent();
         }
     }

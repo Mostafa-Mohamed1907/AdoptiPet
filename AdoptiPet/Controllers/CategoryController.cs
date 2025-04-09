@@ -57,16 +57,25 @@ namespace AdoptiPet.Controllers
             var category = categoryRepository.GetCategories()
                 .FirstOrDefault(c => c.Name.Trim().ToUpper() == categoryDto.Name.Trim().ToUpper());
 
-            if (category!=null)
+            if (category != null)
             {
                 ModelState.AddModelError("", "Category already exists");
                 return BadRequest(ModelState);
             }
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var categoryMap = mapper.Map<Category>(categoryDto);
             categoryRepository.CreateCategory(categoryMap);
             return Ok("Created Successfully");
+        }
+        [HttpDelete("{categoryId}")]
+        public IActionResult DeleteCategory(int categoryId)
+        {
+            if (!categoryRepository.CategoryExist(categoryId))
+                return NotFound();
+            var category = categoryRepository.GetById(categoryId);
+            categoryRepository.DeleteCategory(category);
+            return Ok("Category deleted Successfully");
         }
     }
 }
