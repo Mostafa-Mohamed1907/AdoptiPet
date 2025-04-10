@@ -74,6 +74,29 @@ namespace AdoptiPet.Controllers
                 return BadRequest(ModelState);
             return Ok("Review created successfully");
         }
+        [HttpPut("{reviewId}")]
+        public IActionResult UpdateReview(int reviewId, [FromBody] ReviewDTO reviewDto)
+        {
+            if (reviewDto == null || reviewId != reviewDto.Id || !ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (!reviewRepository.ReviewExists(reviewId))
+                return NotFound();
+            if (reviewDto.Rating < 1 & reviewDto.Rating > 5)
+            {
+                return BadRequest("Rating must be between 1 and 5.");
+            }
+            if (!reviewerRepository.ReviewerExists(reviewDto.ReviewerId))
+            {
+                return NotFound($"Reviewer with ID {reviewDto.ReviewerId} does not exist.");
+            }
+            if (!petRepository.PetExists(reviewDto.PetId))
+            {
+                return NotFound($"Pet with ID {reviewDto.PetId} does not exist.");
+            }
+            var reviewMap = mapper.Map<Models.Review>(reviewDto);
+            reviewRepository.UpdateReview(reviewMap);
+            return Ok("Review updated successfully");
+        }
         [HttpDelete("{reviewId}")]
         public IActionResult DeleteReview(int reviewId)
         {

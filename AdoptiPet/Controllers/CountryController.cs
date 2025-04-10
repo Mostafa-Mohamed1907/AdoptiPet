@@ -77,6 +77,18 @@ namespace AdoptiPet.Controllers
             countryRepository.CreateCountry(countryMap);
             return Ok("Created Successfully");
         }
+        [HttpPut("{countryId}")]
+        public IActionResult UpdateCountry(int countryId, [FromBody] CountryDTO countryDto)
+        {
+            if (countryDto == null || countryId != countryDto.Id || !ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (!countryRepository.CountryExists(countryId))
+                return NotFound();
+            var countryMap = mapper.Map<Country>(countryDto);
+            countryRepository.UpdateCountry(countryMap);
+            return Ok("Updated Successfully");
+        }
+
         [HttpDelete("{countryId}")]
         public IActionResult DeleteCountry(int countryId)
         {

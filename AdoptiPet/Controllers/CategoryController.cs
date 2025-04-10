@@ -68,6 +68,19 @@ namespace AdoptiPet.Controllers
             categoryRepository.CreateCategory(categoryMap);
             return Ok("Created Successfully");
         }
+
+        [HttpPut("{categoryId}")]
+        public IActionResult UpdateCategory(int categoryId, [FromBody] CategoryDTO categoryDto)
+        {
+            if (categoryDto == null || categoryId != categoryDto.Id || !ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (!categoryRepository.CategoryExist(categoryId))
+                return NotFound();
+            var categoryMap = mapper.Map<Category>(categoryDto);
+            categoryRepository.UpdateCategory(categoryMap);
+            return Ok("Updated Successfully");
+        }
+
         [HttpDelete("{categoryId}")]
         public IActionResult DeleteCategory(int categoryId)
         {
@@ -77,5 +90,8 @@ namespace AdoptiPet.Controllers
             categoryRepository.DeleteCategory(category);
             return Ok("Category deleted Successfully");
         }
+    
+        
+
     }
 }

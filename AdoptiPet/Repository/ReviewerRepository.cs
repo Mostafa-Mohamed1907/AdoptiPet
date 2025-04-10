@@ -37,6 +37,11 @@ namespace AdoptiPet.Repository
             context.Reviewers.Add(reviewer);
             Save();
         }
+        public void UpdateReviewer(Reviewer reviewer)
+        {
+            context.Reviewers.Update(reviewer);
+            Save();
+        }
         public void DeleteReviewer(Reviewer reviewer)
         {
             context.Reviewers.Remove(reviewer);

@@ -58,6 +58,17 @@ namespace AdoptiPet.Controllers
             reviewerRepository.CreateReviewer(reviewer);
             return CreatedAtRoute("GetReviewerById", new { reviewerId = reviewer.Id }, reviewer);
         }
+        [HttpPut("{reviewerId}")]
+        public IActionResult UpdateReviewer(int reviewerId, [FromBody] ReviewerDTO reviewerDto)
+        {
+            if (reviewerDto == null || reviewerId != reviewerDto.Id || !ModelState.IsValid)
+                return BadRequest(ModelState);  
+            if (!reviewerRepository.ReviewerExists(reviewerId))
+                return NotFound();
+            var reviewer = mapper.Map<Reviewer>(reviewerDto);
+            reviewerRepository.UpdateReviewer(reviewer);
+            return Ok("Reviewer Updated successfully");
+        }
         [HttpDelete("{reviewerId}")]
         public IActionResult DeleteReviewer(int reviewerId)
         {

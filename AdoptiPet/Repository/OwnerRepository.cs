@@ -39,6 +39,11 @@ namespace AdoptiPet.Repository
             context.Owners.Add(owner);
             Save();
         }
+        public void UpdateOwner(Owner owner)
+        {
+            context.Owners.Update(owner);
+            Save();
+        }
         public void DeleteOwner(Owner owner)
         {
             context.Owners.Remove(owner);

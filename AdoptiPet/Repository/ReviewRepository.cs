@@ -38,6 +38,12 @@ namespace AdoptiPet.Repository
             context.Reviews.Add(review);
             Save();
         }
+
+        public void UpdateReview(Review review)
+        {
+            context.Reviews.Update(review);
+            Save();
+        }
         public void DeleteReview(Review review)
         {
             context.Reviews.Remove(review);

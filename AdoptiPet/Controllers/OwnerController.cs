@@ -79,6 +79,22 @@ namespace AdoptiPet.Controllers
             ownerRepository.CreateOwner(owner);
             return CreatedAtRoute("GetOwnerById", new { ownerId = owner.Id }, owner);
         }
+        [HttpPut("{ownerId}")]
+        public IActionResult UpdateOwner(int ownerId, [FromBody] OwnerDTO ownerDto)
+        {
+            if (ownerDto == null || ownerId != ownerDto.Id || !ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (!ownerRepository.OwnerExists(ownerId))
+                return NotFound();
+            if (!countryRepository.CountryExists(ownerDto.CountryId))
+            {
+                ModelState.AddModelError("CountryId", "Invalid Country ID.");
+                return BadRequest(ModelState);
+            }
+            var ownerMap = mapper.Map<Owner>(ownerDto);
+            ownerRepository.UpdateOwner(ownerMap);
+            return Ok("Updated Successfully");
+        }
         [HttpDelete("{ownerId}")]
         public IActionResult DeleteOwner(int ownerId)
         {

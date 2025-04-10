@@ -40,6 +40,11 @@ namespace AdoptiPet.Repository
             context.Countries.Add(country);
             Save();
         }
+        public void UpdateCountry(Country country)
+        {
+            context.Countries.Update(country);
+            Save();
+        }
         public void DeleteCountry(Country country)
         {
             context.Countries.Remove(country);

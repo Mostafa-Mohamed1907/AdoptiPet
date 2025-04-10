@@ -9,6 +9,7 @@ namespace AdoptiPet.Repository
         public ICollection<Review> GetReviewsOfAPet(int petId);
         public bool ReviewExists(int reviewId);
         public void CreateReview(Review review);
+        public void UpdateReview(Review review);
         public void DeleteReview(Review review);
         public void Save();
     }
