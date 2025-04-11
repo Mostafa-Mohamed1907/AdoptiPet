@@ -10,6 +10,7 @@ namespace AdoptiPet.Helper
         {
             CreateMap<Pet, PetDTO>();
             CreateMap<PetDTO, Pet>();
+            CreateMap<CreatePetDTO, Pet>();
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
             CreateMap<Country, CountryDTO>();

@@ -1,6 +1,8 @@
 ﻿using AdoptiPet.Data;
 using AdoptiPet.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Kerberos;
 
 namespace AdoptiPet.Repository
 {

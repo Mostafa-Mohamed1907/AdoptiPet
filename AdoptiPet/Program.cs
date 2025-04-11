@@ -35,6 +35,16 @@ namespace AdoptiPet
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            // Enable CORS (if needed for different origins)
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -65,8 +75,9 @@ namespace AdoptiPet
 
             app.UseAuthorization();
 
-
-            app.MapControllers();
+            app.UseStaticFiles(); // for serving images from wwwroot
+            app.UseCors("AllowAll");
+            app.MapControllers(); // auto maps controller routes
 
             app.Run();
         }
