@@ -21,6 +21,8 @@ namespace AdoptiPet.Helper
             CreateMap<ReviewDTO, Review>();
             CreateMap<Reviewer, ReviewerDTO>();
             CreateMap<ReviewerDTO, Reviewer>();
+            CreateMap<RegisterDTO, ApplicationUser>();
+            CreateMap<LoginDTO, ApplicationUser>();
         }
     }
 }
